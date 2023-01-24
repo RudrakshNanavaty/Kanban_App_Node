@@ -1,9 +1,0 @@
-version: '3'
-services:
-    docker_fcc:
-        build: .
-        ports:
-            - 8001:8000
-        env_file:
-            - ./.env
-        command: npm start
