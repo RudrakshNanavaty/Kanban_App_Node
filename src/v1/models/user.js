@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { schemaOptions } = require('./modelOptions');
+const mongoose = require("mongoose")
+const { schemaOptions } = require("./modelOptions")
 
 const userSchema = new mongoose.Schema(
 	{
@@ -14,6 +14,6 @@ const userSchema = new mongoose.Schema(
 		}
 	},
 	schemaOptions
-);
+)
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema)

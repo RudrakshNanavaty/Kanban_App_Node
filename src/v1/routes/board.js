@@ -1,67 +1,67 @@
-const router = require('express').Router();
-const { param } = require('express-validator');
-const validation = require('../handlers/validation');
-const tokenHandler = require('../handlers/tokenHandler');
-const boardController = require('../controllers/board');
+const router = require("express").Router()
+const { param } = require("express-validator")
+const validation = require("../handlers/validation")
+const tokenHandler = require("../handlers/tokenHandler")
+const boardController = require("../controllers/board")
 
-router.post('/', tokenHandler.verifyToken, boardController.create);
+router.post("/", tokenHandler.verifyToken, boardController.create)
 
-router.get('/', tokenHandler.verifyToken, boardController.getAll);
+router.get("/", tokenHandler.verifyToken, boardController.getAll)
 
-router.put('/', tokenHandler.verifyToken, boardController.updatePosition);
+router.put("/", tokenHandler.verifyToken, boardController.updatePosition)
 
 router.get(
-	'/favourites',
+	"/favourites",
 	tokenHandler.verifyToken,
 	boardController.getFavourites
-);
+)
 
 router.put(
-	'/favourites',
+	"/favourites",
 	tokenHandler.verifyToken,
 	boardController.updateFavouritePosition
-);
+)
 
 router.get(
-	'/:boardId',
+	"/:boardId",
 
-	param('boardId').custom((value) => {
+	param("boardId").custom(value => {
 		if (!validation.isObjectId(value)) {
-			return Promise.reject('Invalid Board ID');
-		} else return Promise.resolve();
+			return Promise.reject("Invalid Board ID")
+		} else return Promise.resolve()
 	}),
 
 	validation.validate,
 	tokenHandler.verifyToken,
 	boardController.getOne
-);
+)
 
 router.put(
-	'/:boardId',
+	"/:boardId",
 
-	param('boardId').custom((value) => {
+	param("boardId").custom(value => {
 		if (!validation.isObjectId(value)) {
-			return Promise.reject('Invalid Board ID');
-		} else return Promise.resolve();
+			return Promise.reject("Invalid Board ID")
+		} else return Promise.resolve()
 	}),
 
 	validation.validate,
 	tokenHandler.verifyToken,
 	boardController.update
-);
+)
 
 router.delete(
-	'/:boardId',
+	"/:boardId",
 
-	param('boardId').custom((value) => {
+	param("boardId").custom(value => {
 		if (!validation.isObjectId(value)) {
-			return Promise.reject('Invalid Board ID');
-		} else return Promise.resolve();
+			return Promise.reject("Invalid Board ID")
+		} else return Promise.resolve()
 	}),
 
 	validation.validate,
 	tokenHandler.verifyToken,
 	boardController.deleteBoard
-);
+)
 
-module.exports = router;
+module.exports = router

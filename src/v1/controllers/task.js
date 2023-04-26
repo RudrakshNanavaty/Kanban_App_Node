@@ -1,58 +1,58 @@
-const Section = require('../models/section');
-const Task = require('../models/task');
+const Section = require("../models/section")
+const Task = require("../models/task")
 
 exports.create = async (req, res) => {
-	const { sectionId } = req.body;
+	const { sectionId } = req.body
 	try {
-		const section = await Section.findById(sectionId);
-		const taskCount = await Task.find({ section: sectionId }).count();
+		const section = await Section.findById(sectionId)
+		const taskCount = await Task.find({ section: sectionId }).count()
 
 		const task = await Task.create({
 			section: sectionId,
 			position: taskCount > 0 ? taskCount : 0
-		});
+		})
 
-		task._doc.section = section;
-		res.status(201).json(task);
+		task._doc.section = section
+		res.status(201).json(task)
 	} catch (err) {
-		res.status(500).json(err);
+		res.status(500).json(err)
 	}
-};
+}
 
 exports.update = async (req, res) => {
-	const { taskId } = req.params;
+	const { taskId } = req.params
 	try {
-		const task = await Task.findByIdAndUpdate(taskId, { $set: req.body });
-		res.status(200).json(task);
+		const task = await Task.findByIdAndUpdate(taskId, { $set: req.body })
+		res.status(200).json(task)
 	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
+		console.log(err)
+		res.status(500).json(err)
 	}
-};
+}
 
 exports.delete = async (req, res) => {
-	const { taskId } = req.params;
+	const { taskId } = req.params
 	try {
-		const currentTask = Task.findById(taskId);
+		const currentTask = Task.findById(taskId)
 
-		await Task.deleteOne({ _id: taskId });
+		await Task.deleteOne({ _id: taskId })
 
 		const tasks = await Task.find({ section: currentTask.section }).sort(
-			'position'
-		);
+			"position"
+		)
 
 		for (const key in tasks) {
 			await Task.findByIdAndUpdate(tasks[key].id, {
 				$set: { position: key }
-			});
+			})
 		}
 
-		res.status(200).json('Task Deleted');
+		res.status(200).json("Task Deleted")
 	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
+		console.log(err)
+		res.status(500).json(err)
 	}
-};
+}
 
 exports.updatePosition = async (req, res) => {
 	const {
@@ -60,10 +60,10 @@ exports.updatePosition = async (req, res) => {
 		destinationList,
 		resourceSectionId,
 		destinationSectionId
-	} = req.body;
+	} = req.body
 
-	const resourceListReverse = resourceList.reverse();
-	const desitnationListReverse = destinationList.reverse();
+	const resourceListReverse = resourceList.reverse()
+	const desitnationListReverse = destinationList.reverse()
 
 	try {
 		if (resourceSectionId !== destinationSectionId) {
@@ -73,7 +73,7 @@ exports.updatePosition = async (req, res) => {
 						section: resourceSectionId,
 						position: key
 					}
-				});
+				})
 			}
 		}
 
@@ -83,12 +83,12 @@ exports.updatePosition = async (req, res) => {
 					section: destinationSectionId,
 					position: key
 				}
-			});
+			})
 		}
 
-		res.status(200).json('Task Position Updated');
+		res.status(200).json("Task Position Updated")
 	} catch (err) {
-		console.log(err);
-		res.status(500).json(err);
+		console.log(err)
+		res.status(500).json(err)
 	}
-};
+}

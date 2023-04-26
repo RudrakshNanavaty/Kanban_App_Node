@@ -1,25 +1,25 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const { schemaOptions } = require('./modelOptions');
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
+const { schemaOptions } = require("./modelOptions")
 
 const taskSchema = new Schema(
 	{
 		section: {
 			type: Schema.Types.ObjectId,
-			ref: 'Section',
+			ref: "Section",
 			required: true
 		},
 		title: {
 			type: String,
-			default: 'Untitled'
+			default: "Untitled"
 		},
 		content: {
 			type: String,
-			default: ''
+			default: ""
 		},
 		position: { type: Number }
 	},
 	schemaOptions
-);
+)
 
-module.exports = mongoose.model('Task', taskSchema);
+module.exports = mongoose.model("Task", taskSchema)

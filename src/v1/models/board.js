@@ -1,25 +1,25 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const { schemaOptions } = require('./modelOptions');
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
+const { schemaOptions } = require("./modelOptions")
 
 const boardSchema = new Schema(
 	{
 		user: {
 			type: Schema.Types.ObjectId,
-			ref: 'User',
+			ref: "User",
 			required: true
 		},
 		icon: {
 			type: String,
-			default: '📄 '
+			default: "📄 "
 		},
 		title: {
 			type: String,
-			default: 'Untitled'
+			default: "Untitled"
 		},
 		description: {
 			type: String,
-			default: ''
+			default: ""
 		},
 		position: { type: Number },
 		favourite: { type: Boolean, default: false },
@@ -29,6 +29,6 @@ const boardSchema = new Schema(
 		}
 	},
 	schemaOptions
-);
+)
 
-module.exports = mongoose.model('Board', boardSchema);
+module.exports = mongoose.model("Board", boardSchema)
